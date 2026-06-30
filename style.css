@@ -536,3 +536,36 @@ height:500px;
 }
 
 }
+/* ==============================
+        CREDITS
+================================= */
+
+.credits{
+
+    margin-top:20px;
+
+    text-align:center;
+
+    color:#bbbbbb;
+
+    font-size:15px;
+
+    letter-spacing:1px;
+
+}
+
+.credits strong{
+
+    color:#FFD54F;
+
+    font-weight:600;
+
+}
+
+.credits p{
+
+    padding:12px;
+
+    border-top:1px solid #333;
+
+}
