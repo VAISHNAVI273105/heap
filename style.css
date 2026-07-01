@@ -569,3 +569,28 @@ height:500px;
     border-top:1px solid #333;
 
 }
+.array-box.sorted{
+
+    background:#4CAF50;
+
+    color:white;
+
+    animation:sortedAnimation .5s;
+
+}
+
+@keyframes sortedAnimation{
+
+    from{
+
+        transform:scale(0.6);
+
+    }
+
+    to{
+
+        transform:scale(1);
+
+    }
+
+}

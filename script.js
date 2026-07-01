@@ -555,13 +555,117 @@ function buildHeap(){
 // HEAP SORT
 // ==========================================
 
-function heapSort(){
+async function heapSort(){
 
-    setStatus(
+    if(heap.heap.length <= 1){
+        setStatus("Need at least 2 elements.");
+        return;
+    }
 
-        "Heap Sort Visualization Coming in Part 6"
+    addHistory("Heap Sort Started");
 
-    );
+    let arr = [...heap.heap];
+    let sorted = [];
+
+    while(arr.length){
+
+        sorted.push(arr[0]);
+
+        if(arr.length == 1){
+            arr.pop();
+        }
+        else{
+
+            arr[0] = arr.pop();
+
+            let i = 0;
+
+            while(true){
+
+                let left = 2*i+1;
+                let right = 2*i+2;
+                let target = i;
+
+                if(left < arr.length){
+
+                    if(heap.type=="max"){
+
+                        if(arr[left] > arr[target])
+                            target = left;
+
+                    }else{
+
+                        if(arr[left] < arr[target])
+                            target = left;
+
+                    }
+
+                }
+
+                if(right < arr.length){
+
+                    if(heap.type=="max"){
+
+                        if(arr[right] > arr[target])
+                            target = right;
+
+                    }else{
+
+                        if(arr[right] < arr[target])
+                            target = right;
+
+                    }
+
+                }
+
+                if(target==i) break;
+
+                [arr[i],arr[target]]=[arr[target],arr[i]];
+
+                i=target;
+            }
+
+        }
+
+        arrayContainer.innerHTML="";
+
+        sorted.forEach(v=>{
+
+            const box=document.createElement("div");
+
+            box.className="array-box sorted";
+
+            box.innerHTML=v;
+
+            arrayContainer.appendChild(box);
+
+        });
+
+        arr.forEach(v=>{
+
+            const box=document.createElement("div");
+
+            box.className="array-box";
+
+            box.innerHTML=v;
+
+            arrayContainer.appendChild(box);
+
+        });
+
+        await new Promise(r=>setTimeout(r,700));
+
+    }
+
+    if(heap.type=="max"){
+
+        sorted.reverse();
+
+    }
+
+    addHistory("Heap Sort Completed");
+
+    setStatus("Heap Sort Completed");
 
 }
 // ======================================
@@ -623,7 +727,10 @@ function drawLine(x1,y1,x2,y2){
     line.setAttribute("y2",y2);
 
     line.setAttribute("class","edge");
-
+line.setAttribute(
+    "marker-end",
+    "url(#arrow)"
+);
     svg.appendChild(line);
 
 }
@@ -683,6 +790,44 @@ function drawHeap(){
         return;
 
     }
+// Arrow Definition
+
+const defs = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "defs"
+);
+
+const marker = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "marker"
+);
+
+marker.setAttribute("id", "arrow");
+
+marker.setAttribute("markerWidth", "10");
+
+marker.setAttribute("markerHeight", "10");
+
+marker.setAttribute("refX", "8");
+
+marker.setAttribute("refY", "3");
+
+marker.setAttribute("orient", "auto");
+
+const path = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "path"
+);
+
+path.setAttribute("d", "M0,0 L0,6 L9,3 Z");
+
+path.setAttribute("fill", "#FFD54F");
+
+marker.appendChild(path);
+
+defs.appendChild(marker);
+
+svg.appendChild(defs);
 
     // Draw Parent-Child Lines
 
